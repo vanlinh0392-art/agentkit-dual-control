@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Local test & coverage caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.log
+*.log.tmp
+
+# AgentKit & System Snapshots / WAL / Quarantine
+.agentkit/
+.brain/
+.code_guard_snapshots/
+.agentkit_wal/
+
+# CodeGraph local database & cache
+.codegraph/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary & backup files
+*.bak
+*.old
+*.orig
+*.tmp
+*.temp
+*~

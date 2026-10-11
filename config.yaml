@@ -1,0 +1,132 @@
+# AgentKit Dual-Control Configuration v5.1.0
+# ============================================
+# Tập trung toàn bộ ngưỡng (thresholds) vào 1 file duy nhất.
+# Scripts và protocols tham chiếu giá trị từ đây.
+# User chỉ cần sửa 1 nơi → hiệu lực toàn hệ thống.
+#
+# Cách đọc trong Python:
+#   import yaml
+#   with open("config.yaml") as f:
+#       cfg = yaml.safe_load(f)
+#   ceiling = cfg["watchdog"]["ceiling_seconds"]  # 900
+
+# --- Job Supervision & Watchdog (§1) ---
+watchdog:
+  ceiling_seconds: 900            # 15 phút — trần cứng cho mọi non-daemon task
+  max_wait_ms_before_async: 30000 # 30s — WaitMsBeforeAsync tối đa cho run_command
+  progress_silence_seconds: 120   # 2 phút — ngưỡng im lặng trước khi kiểm tra log
+  log_tail_lines: 100             # Số dòng cuối log đọc khi chẩn đoán
+  kill_on_no_progress: true       # Kill task nếu watchdog fire + không có progress mới
+
+# --- Error Recovery (§5) ---
+retry:
+  l1_max_attempts: 3              # Tối đa 3 lần Self-Heal cùng 1 approach
+  l2_max_approaches: 2            # Tối đa 2 approach khác nhau trước khi escalate
+  skill_fallback_max: 3           # Tối đa 3 lần fallback khi thực thi skill blueprint
+
+# --- Quality Gates (§6, §7, §8, §9) ---
+quality_gates:
+  # Gate 0.5 — Cross-Worker Contract (§6b, v5.3)
+  contract_arity_tolerance: 1     # Cho phép sai lệch ±N params (default args)
+  contract_skip_dirs:             # Bỏ qua thư mục khi scan contracts
+    - ".venv"
+    - "venv"
+    - "node_modules"
+    - "__pycache__"
+    - ".git"
+
+  # Gate 0 — SDE Contract (§6)
+  scope_creep_strict: true        # true = chặn 100% file ngoài target_files
+
+  # Gate 2 — Test Rigor (§7)
+  assert_density_min: 2.0         # Assert Density tối thiểu (assertions / test function)
+  rigor_score_min: 80             # Test Rigor Score tối thiểu (100-scale)
+  mutation_kill_rate_min: 0.80    # Mutation Kill Rate tối thiểu (80%)
+  mutation_timeout_seconds: 3     # Timeout cho Mutation Testing Lite
+
+  # Gate 3 — ARC Review Council (§9)
+  arc_pass_threshold: 8.0         # Tất cả reviewer phải chấm ≥ 8.0
+  arc_max_high_risk: 0            # Tối đa 0 High Risk findings
+  arc_max_blockers: 0             # Tối đa 0 Blockers
+
+  # Gate 2.5 — Test Execution (v5.4)
+  test_execution_timeout_seconds: 120  # Timeout chạy test suite
+  test_execution_required: true        # true = chặn merge nếu test fail
+
+  # Kongming Verifier Scoring
+  hard_floor_score: 5.0           # Tiêu chí Core < 5.0 → DISQUALIFIED
+  variance_penalty_threshold: 6.0 # Trừ 0.5 điểm nếu variance ≥ 6.0
+  variance_penalty_amount: 0.5
+
+# --- Complexity Gating & Planning (§11, Layer 02b) ---
+planning:
+  # Complexity Gating 4 Tầng (v5.3.1 — lowered thresholds)
+  t0_max_files: 1                 # T0 Micro: CHỈ 1 file → in-process (was 2)
+  t1_max_files: 3                 # T1 Local: 2-3 files → 1-2 subagents (was 5)
+  t2_max_files: 10                # T2 Standard: 4-10 files → 3 workers Tri-Worker (was 15)
+  # T3 Enterprise: >10 files → 5-9 subagents + full plan (was >15)
+
+  # Kongming Verifier Weights
+  weights:
+    completeness: 0.30
+    correctness: 0.25
+    security: 0.20
+    efficiency: 0.15
+    simplicity: 0.10
+
+# --- Closed-Loop Remediation (§10) ---
+remediation:
+  max_rounds: 3                   # Tối đa 3 vòng L1 trước khi escalate to user
+  rollback_target_ms: 5           # Rollback WAL phải < 5ms
+
+# --- Review Router (v5.3.1 Review-First) ---
+review_router:
+  allow_tier1_silent: false        # false (mặc định) = MỌI thay đổi đều phải review ít nhất Tier 2
+                                   # true = cho phép skip review (Tier 1 silent) cho diff <10 dòng, 1 file, non-sensitive
+  tier3_min_lines: 200             # Ngưỡng dòng diff để escalate lên Tier 3 (Full Council)
+  tier3_min_files: 3               # Ngưỡng số files để escalate lên Tier 3
+
+# --- Token-Thrifty Diff Slicing (§11) ---
+diff_slicing:
+  context_lines: 7                # Số dòng context window cho unified diff
+
+# --- Reporting ---
+reporting:
+  executive_summary_max_lines: 15 # Executive Summary trong chatbox tối đa 15 dòng
+
+# --- Debate (Layer 02b) ---
+debate:
+  max_rounds: 3                   # Tối đa 3 vòng tranh luận Proponent vs Skeptic
+  skeptic_attack_vectors: 7       # 7 góc tấn công bắt buộc (xem sidecar_matrix.md §4)
+
+# --- Content Filter Safety (§12) ---
+content_filter:
+  vocabulary_file: references/safe_vocabulary.yaml  # Bảng chuyển ngữ động
+
+# --- AST Linter & STRIDE Scanner ---
+linter:
+  disabled_rules: []              # Tắt rule cụ thể, e.g. ["PY-IMP-001", "PY-CMP-002"]
+  strict_mode: false              # true = WARNING thành ERROR
+
+# --- Post-Task Ephemeral Cleanup (§14) ---
+cleanup:
+  enabled: true
+  auto_prune_on_handover: true      # Tự động dọn dẹp khi đến bước Handover Trio
+  retention_days_logs: 7            # Log cũ hơn 7 ngày sẽ bị xóa
+  wal_snapshot_retention_hours: 24  # Snapshot WAL cũ hơn 24h sẽ bị xóa
+  stale_extensions: [".bak", ".old", ".orig", ".tmp", ".swp", "~*"]
+  scratch_prefixes: ["tmp_", "temp_", "scratch_", "test_temp_", "debug_probe_", "inspect_", "probe_", "check_", "dump_", "trace_", "oneoff_"]
+  quarantine: true
+  quarantine_dir: ".agentkit/trash"
+  ttl_hours: 24
+  secure_shred: true
+  protected_dirs: [".git", "node_modules", ".venv", "venv", "skills", "workflows", ".codegraph"]
+  dry_run_default: false
+
+# --- Dependency Audit (v5.4) ---
+dep_audit:
+  enabled: true                       # Tự động quét khi dependency file thay đổi
+  block_on_typosquat: true             # Chặn nếu phát hiện typosquat
+  block_on_unpinned: false             # Cảnh báo nhưng không chặn unpinned versions
+  max_edit_distance: 2                 # Ngưỡng Levenshtein cho typosquat detection
+

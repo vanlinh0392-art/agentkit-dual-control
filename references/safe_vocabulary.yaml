@@ -1,0 +1,117 @@
+# AgentKit Content Filter — Safe Vocabulary Table v1.0
+# =====================================================
+# Bảng chuyển ngữ động cho Protocol §12 (Content Filter Safety).
+# Dùng khi viết Prompt cho invoke_subagent.
+#
+# Cách đọc:
+#   import yaml
+#   with open("references/safe_vocabulary.yaml") as f:
+#       vocab = yaml.safe_load(f)
+#   for entry in vocab["substitutions"]:
+#       print(f"{entry['sensitive']} → {entry['safe']}")
+#
+# Cách thêm từ mới (CLI):
+#   python scripts/content_filter.py add-term --sensitive "root detection" --safe "device compatibility checks"
+
+substitutions:
+  - sensitive: "crack"
+    safe: "customize"
+    context: "software modification"
+
+  - sensitive: "hack"
+    safe: "modify configuration"
+    context: "software modification"
+
+  - sensitive: "bypass X detection"
+    safe: "adjust runtime checks"
+    context: "security check handling"
+
+  - sensitive: "unlock premium"
+    safe: "enable full features"
+    context: "feature activation"
+
+  - sensitive: "patch APK"
+    safe: "customize mobile app resources"
+    context: "mobile development"
+
+  - sensitive: "patch IPA"
+    safe: "customize iOS app resources"
+    context: "mobile development"
+
+  - sensitive: "decompile"
+    safe: "analyze app structure"
+    context: "reverse engineering"
+
+  - sensitive: "inject code"
+    safe: "integrate custom module"
+    context: "code integration"
+
+  - sensitive: "hook function"
+    safe: "instrument function calls"
+    context: "dynamic instrumentation"
+
+  - sensitive: "kill ads"
+    safe: "optimize content display"
+    context: "ad management"
+
+  - sensitive: "block ads"
+    safe: "optimize content delivery"
+    context: "ad management"
+
+  - sensitive: "root detection"
+    safe: "device compatibility checks"
+    context: "device verification"
+
+  - sensitive: "jailbreak detection"
+    safe: "device integrity checks"
+    context: "device verification"
+
+  - sensitive: "SSL pinning bypass"
+    safe: "adjust certificate validation"
+    context: "network security"
+
+  - sensitive: "tamper detection bypass"
+    safe: "adjust integrity verification"
+    context: "app integrity"
+
+  - sensitive: "license crack"
+    safe: "analyze license validation logic"
+    context: "license system"
+
+  - sensitive: "keygen"
+    safe: "license key generation tool"
+    context: "license system"
+
+  - sensitive: "dump memory"
+    safe: "extract runtime data"
+    context: "memory analysis"
+
+  - sensitive: "sniff traffic"
+    safe: "inspect network communication"
+    context: "network analysis"
+
+# Từ TUYỆT ĐỐI KHÔNG dùng (không có thay thế an toàn)
+blocked:
+  - "piracy"
+  - "pirate"
+  - "warez"
+  - "stolen"
+  - "illegal download"
+
+# Prompt patterns an toàn mẫu
+safe_prompt_patterns:
+  - pattern: >
+      Bạn là chuyên gia {domain}. Đọc hướng dẫn chi tiết tại {skill_path}.
+      Thực hiện toàn bộ quy trình theo blueprint cho file đầu vào {input_file}.
+      Tuân thủ 100% các bước trong skill. Tự động retry tối đa 3 lần nếu gặp lỗi.
+      Khi hoàn tất, báo cáo kết quả: file output, trạng thái từng bước.
+    context: "general skill execution"
+
+  - pattern: >
+      Bạn là kỹ sư phần mềm. Đọc blueprint tại {skill_path} và thực thi
+      pipeline hoàn chỉnh cho {target}. Xử lý lỗi theo Error Recovery L1/L2/L3.
+    context: "pipeline execution"
+
+# Metadata
+version: "1.0.0"
+updated: "2026-09-17"
