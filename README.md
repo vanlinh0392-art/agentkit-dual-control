@@ -151,8 +151,9 @@ irm https://raw.githubusercontent.com/vanlinh0392-art/agentkit-dual-control/main
 *Script sẽ tự động:*
 1. Clone repo vào `%USERPROFILE%\.gemini\config\skills\agentkit-dual-control`.
 2. Kiểm tra Python 3.10+, Git, RTK, CodeGraph.
-3. Chạy `health_check.py` kiểm chứng toàn bộ 19 module.
-4. Cấu hình tự động vào môi trường Antigravity / Gemini CLI.
+3. **Đồng bộ tự động các Rule & Doctrine fix cứng:** Nạp trực tiếp toàn bộ các Doctrine cốt lõi từ `GEMINI.md` vào `~/.gemini/GEMINI.md` của bạn (kèm sao lưu tự động).
+4. Chạy `health_check.py` kiểm chứng toàn bộ 19 module.
+5. Sẵn sàng hoạt động ngay lập tức trên Antigravity / Gemini CLI.
 
 ---
 
@@ -174,10 +175,28 @@ cd ~/.gemini/config/skills
 # 2. Clone repository
 git clone https://github.com/vanlinh0392-art/agentkit-dual-control.git
 
-# 3. Di chuyển vào thư mục và kiểm tra tính toàn vẹn
+# 3. Đồng bộ file Rule fix cứng vào ~/.gemini/GEMINI.md
+cp agentkit-dual-control/GEMINI.md ~/.gemini/GEMINI.md
+
+# 4. Kiểm tra tính toàn vẹn hệ thống
 cd agentkit-dual-control
 python scripts/health_check.py
 ```
+
+---
+
+## 📜 Các Quy Tắc Fix Cứng Trong `GEMINI.md` (System Doctrines)
+
+Để đảm bảo AI luôn tuân thủ kỷ luật nghiêm ngặt mà không phụ thuộc vào ngữ cảnh hội thoại, AgentKit đóng gói sẵn toàn bộ các **Doctrines fix cứng** trong `GEMINI.md`:
+
+| Doctrine | Mục đích cốt lõi |
+| :--- | :--- |
+| **🧠 Pro Max Reasoning** | Ép model luôn chạy ở High Reasoning (`Model: 'inherit'`), cấm dùng model yếu cho các tác vụ lập luận. |
+| **🛡️ Dual-Control Doctrine** | Trần 15 phút + Watchdog bắt buộc, Pre-Response Cleanup Gate (diệt task/subagent mồ côi), Complexity Gating (Tri-Worker khi $\ge 4$ files). |
+| **👑 Technical Advisor** | Đánh giá rủi ro STRIDE Lite, vẽ Blast Radius 3 vùng màu, kiểm soát $O(N)$ và triệt tiêu $N+1$ query. |
+| **🪓 Ponytail Doctrine** | Thang quyết định 7 bước (YAGNI), sửa lỗi tận gốc (cấm vá lớp vỏ), Zero-Pollution Workspace (cấm tạo probe script tại root). |
+| **⚡ RTK Doctrine** | Bắt buộc đặt tiền tố `rtk` trước mọi lệnh shell để nén 50% – 99% token. |
+| **🔍 CodeGraph Doctrine** | Tự động nhận diện `.codegraph/`, ép dùng `codegraph_explore` thay vì grep thủ công. |
 
 ---
 
@@ -205,6 +224,7 @@ python scripts/test_agentkit.py
 agentkit-dual-control/
 ├── config.yaml               # Cấu hình trung tâm (Gates, Thresholds, Quarantine, Timeouts)
 ├── SKILL.md                  # Bản đồ giao thức điều hướng cho AI Coding Assistant
+├── GEMINI.md                 # Quy tắc fix cứng toàn cục (Doctrines: Dual-Control, Ponytail, RTK, CodeGraph)
 ├── README.md                 # Tài liệu hướng dẫn sử dụng & kiến trúc
 ├── LICENSE                   # Giấy phép nguồn mở MIT
 ├── install.ps1               # Script cài đặt 1-click cho Windows PowerShell

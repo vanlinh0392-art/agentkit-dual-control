@@ -6,6 +6,8 @@ set -e
 
 TARGET_DIR="${HOME}/.gemini/config/skills/agentkit-dual-control"
 REPO_URL="https://github.com/vanlinh0392-art/agentkit-dual-control.git"
+GEMINI_DIR="${HOME}/.gemini"
+USER_GEMINI_MD="${GEMINI_DIR}/GEMINI.md"
 
 echo "============================================================"
 echo "   🛡️ AGENTKIT DUAL-CONTROL v5.5.0 — 1-CLICK INSTALLER      "
@@ -48,7 +50,7 @@ fi
 
 # 4. Check Synergistic Ecosystem Tools
 echo ""
-echo "[4/5] Kiểm tra công cụ phụ trợ..."
+echo "[4/6] Kiểm tra công cụ phụ trợ..."
 if command -v rtk &> /dev/null; then
     echo "  ✅ RTK (Rust Token Killer): Đã cài đặt"
 else
@@ -61,9 +63,33 @@ else
     echo "  ⚠️ CodeGraph: Chưa phát hiện (Cài đặt: npm i -g @colbymchenry/codegraph)"
 fi
 
-# 5. Run Health Check
+# 5. Configure GEMINI.md Rules
 echo ""
-echo "[5/5] Kiểm chứng hệ thống (Health Check)..."
+echo "[5/6] Đồng bộ các Rule & Doctrine fix cứng vào GEMINI.md..."
+mkdir -p "$GEMINI_DIR"
+SRC_GEMINI_MD="${TARGET_DIR}/GEMINI.md"
+
+if [ -f "$SRC_GEMINI_MD" ]; then
+    if [ ! -f "$USER_GEMINI_MD" ]; then
+        cp "$SRC_GEMINI_MD" "$USER_GEMINI_MD"
+        echo "  ✅ Đã khởi tạo mới ~/.gemini/GEMINI.md với đầy đủ các Doctrine cốt lõi."
+    else
+        if grep -q "AGENTKIT DUAL-CONTROL DOCTRINE" "$USER_GEMINI_MD"; then
+            echo "  ✅ ~/.gemini/GEMINI.md đã có sẵn các Doctrine của AgentKit Dual-Control."
+        else
+            BACKUP_MD="${USER_GEMINI_MD}.bak_$(date +%Y%m%d_%H%M%S)"
+            cp "$USER_GEMINI_MD" "$BACKUP_MD"
+            cat "$SRC_GEMINI_MD" >> "$USER_GEMINI_MD"
+            echo "  ✅ Đã tự động cập nhật các Rule fix cứng vào ~/.gemini/GEMINI.md (đã backup: $BACKUP_MD)."
+        fi
+    fi
+else
+    echo "  ⚠️ Không tìm thấy GEMINI.md trong thư mục mã nguồn skill."
+fi
+
+# 6. Run Health Check
+echo ""
+echo "[6/6] Kiểm chứng hệ thống (Health Check)..."
 cd "$TARGET_DIR"
 $PYTHON_CMD scripts/health_check.py
 
@@ -72,4 +98,5 @@ echo "============================================================"
 echo "  🎉 CÀI ĐẶT THÀNH CÔNG AGENTKIT DUAL-CONTROL v5.5.0!        "
 echo "============================================================"
 echo "• Vị trí cài đặt: $TARGET_DIR"
+echo "• Rule fix cứng: $USER_GEMINI_MD"
 echo "• Trạng thái: Sẵn sàng hoạt động."
