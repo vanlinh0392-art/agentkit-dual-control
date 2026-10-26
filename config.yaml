@@ -1,4 +1,4 @@
-# AgentKit Dual-Control Configuration v5.1.0
+# AgentKit Dual-Control Configuration v6.0.0 (Omni-Skills & 12 Plugins Edition)
 # ============================================
 # Tập trung toàn bộ ngưỡng (thresholds) vào 1 file duy nhất.
 # Scripts và protocols tham chiếu giá trị từ đây.
@@ -129,4 +129,36 @@ dep_audit:
   block_on_typosquat: true             # Chặn nếu phát hiện typosquat
   block_on_unpinned: false             # Cảnh báo nhưng không chặn unpinned versions
   max_edit_distance: 2                 # Ngưỡng Levenshtein cho typosquat detection
+
+# --- Omni-Skills Registry & Plugin Architecture (v6.0) ---
+plugins:
+  enabled: true
+  auto_discover: true
+  config_dir: "~/.gemini/config/plugins"
+  bundled_dir: "plugins"
+  manifest_filename: "plugin.json"
+  expected_count: 12
+  installed:
+    - android-cli-plugin
+    - antigravity-kit-plugin
+    - chrome-devtools-plugin
+    - developer-power-skills
+    - elite-workflows-and-taste
+    - firebase
+    - google-antigravity-sdk
+    - modern-web-guidance-plugin
+    - openspec-plugin
+    - science
+    - scientific-agent-skills
+    - social-media-skills
+
+registry:
+  enabled: true
+  index_path: "registry/skills_index.json"
+  storage_dir: "registry/storage"
+  auto_route: true
+  fallback_to_storage: true
+  min_intent_confidence: 0.70
+  cache_ttl_seconds: 3600
+  storage_skill_count: 22
 

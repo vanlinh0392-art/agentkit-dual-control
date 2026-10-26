@@ -2,13 +2,14 @@
 
 # 🛡️ AgentKit Dual-Control Architecture
 
-### Enterprise Multi-Agent Operating System & Cognitive Governance for AI Coding Assistants
+### Enterprise Multi-Agent Operating System & Omni-Skills Governance for AI Coding Assistants
 
-[![Version](https://img.shields.io/badge/version-v5.5.0-blue.svg?style=for-the-badge)](https://github.com/vanlinh0392-art/agentkit-dual-control)
+[![Version](https://img.shields.io/badge/version-v6.0.0-blue.svg?style=for-the-badge)](https://github.com/vanlinh0392-art/agentkit-dual-control)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![Tests](https://img.shields.io/badge/Tests-250%2F250%20PASS%20(100%25)-brightgreen?style=for-the-badge&logo=checkmarx&logoColor=white)](#kiểm-thử-toàn-diện)
-[![Token Thrifty](https://img.shields.io/badge/Token--Optimization-60%25--90%25-orange?style=for-the-badge&logo=fastapi&logoColor=white)](#bộ-tứ-hệ-sinh-thái-hợp-lực-the-synergistic-quad-stack)
+[![Plugins](https://img.shields.io/badge/Plugins-12%20Bundled-purple?style=for-the-badge&logo=google-chrome&logoColor=white)](#-hệ-thống-12-plugins-chuyên-biệt-antigravity-20)
+[![Skills Registry](https://img.shields.io/badge/Skills--Registry-340%2B%20Indexed-brightgreen?style=for-the-badge&logo=speedtest&logoColor=white)](#-omni-skills-registry--inverted-intent-routing)
+[![Token Thrifty](https://img.shields.io/badge/Token--Optimization-60%25--90%25-orange?style=for-the-badge&logo=fastapi&logoColor=white)](#-bộ-tứ-hệ-sinh-thái-hợp-lực-the-synergistic-quad-stack)
 
 <br/>
 
@@ -19,28 +20,78 @@
 
 ---
 
-## 📖 Giới Thiệu (Overview)
+## 📖 Giới Thiệu (Overview v6.0)
 
-**AgentKit Dual-Control (v5.5.0)** là hệ thống kiểm soát tác tử kép (Dual-Control Architecture) cấp doanh nghiệp, được thiết kế chuyên biệt cho **Google Antigravity**, **Gemini CLI** và các trợ lý AI lập trình tiên tiến.
+**AgentKit Dual-Control (v6.0.0 Omni-Skills & 12 Plugins Edition)** là hệ điều hành tác tử kép cấp doanh nghiệp, được tối ưu hóa 100% cho **Google Antigravity 2.0**, **Gemini CLI** và các trợ lý AI lập trình thế hệ mới.
 
-Khi lập trình tự động với AI, hai rủi ro lớn nhất thường gặp là:
-1. **Mất kiểm soát hệ thống (Runtime Drift):** Lệnh treo vô hạn, spam hàng chục tiến trình nền, rò rỉ file rác/debug khắp dự án, hoặc chỉnh sửa lan man ra ngoài phạm vi (Scope Creep).
-2. **Ảo giác & Vá lỗi bề mặt (Superficial Patching):** AI tự đồng ý với chính mình, che đậy lỗi bằng `try/except pass`, không phân tích nguyên nhân gốc rễ, và lãng phí token qua các vòng lặp grep vô tận.
+Trong phiên bản v6.0, AgentKit mở rộng mô hình kiểm soát kép bằng hệ thống **Omni-Skills Architecture**:
+1. **Kiểm soát Tác tử Kép (Dual-Control Core):**
+   - **Tầng 1 — Runtime Protocols (14 giao thức cứng):** Watchdog trần 15 phút, Pre-Response Cleanup Gate (diệt task/subagent mồ côi), khôi phục tức thì qua Copy-on-Write WAL (<5ms) và bộ cách ly rác kỹ thuật có thể hoàn tác (`undo-prune`).
+   - **Tầng 2 — Cognitive Skills & Tri-Core Personas:** Tư duy 3 lớp (Deep Reasoning), Hội đồng phản biện đối kháng độc lập (Adversarial Review Council với 3 Subagent thật), phối hợp cùng bộ tứ kỹ năng tối ưu 60% – 90% token quota.
+2. **Hệ thống 12 Plugins Chuyên biệt (Antigravity 2.0 Plugin Ecosystem):**
+   - Đóng gói toàn bộ 320+ kỹ năng vào 12 plugins theo chuẩn mở của Google Antigravity.
+   - Triển khai trực tiếp vào `~/.gemini/config/plugins/` giúp mở rộng năng lực toàn diện mà không gây nhiễu ngữ cảnh.
+3. **Omni-Skills Registry & Inverted Intent Routing:**
+   - Chỉ mục đảo ngược siêu nhẹ `skills_index.json` (<20KB) định tuyến tức thì 64+ ý định tự nhiên bằng tiếng Việt sang đúng skill/plugin tương ứng.
+   - Kho lưu trữ Standalone Cold Storage (`registry/storage/`) bảo toàn 22 kỹ năng chuyên sâu.
+4. **Bản sắc & Triết lý SOUL.md:**
+   - Định hình phong cách Senior Staff Engineer & Pragmatic Pair Programmer: chống AI Slop, không giả định ngầm, gu thiết kế thẩm mỹ cao, và kỷ luật ngữ cảnh tuyệt đối.
 
-**AgentKit Dual-Control** giải quyết triệt để vấn đề này bằng mô hình **Kiểm soát 2 Tầng (Dual-Control)**:
-- **Tầng 1 — Runtime Protocols (14 giao thức cứng):** Giám sát tiến trình, dọn dẹp tài nguyên, kiểm soát thời gian chờ (Watchdog trần 15 phút), khôi phục tức thì qua Copy-on-Write WAL (<5ms) và dọn dẹp rác kỹ thuật có thể hoàn tác (`undo-prune`).
-- **Tầng 2 — Cognitive Skills (Tư duy sâu 3 pha):** Lập luận 3 lớp (Deep Reasoning), Hội đồng phản biện đối kháng độc lập (Adversarial Review Council với 3 Subagent thật), cùng bộ tứ kỹ năng hợp lực giúp cắt giảm 60% – 90% chi phí Token.
+---
+
+## 🧩 Hệ Thống 12 Plugins Chuyên Biệt (Antigravity 2.0)
+
+Toàn bộ năng lực chuyên sâu được cấu trúc hóa vào 12 plugin tiêu chuẩn trong thư mục `plugins/` (và tự động liên kết tới `~/.gemini/config/plugins/`):
+
+| STT | Plugin Name | Vai Trò & Năng Lực Cốt Lõi |
+| :---: | :--- | :--- |
+| 1 | **android-cli-plugin** | Điều khiển Android qua CLI/ADB không dây, quản lý app & flows tương tác |
+| 2 | **antigravity-kit-plugin** | Bộ công cụ mở rộng hệ sinh thái Antigravity, ruleset & workflows tích hợp |
+| 3 | **chrome-devtools-plugin** | Tương tác & tự động hóa DevTools, phân tích console, network và DOM |
+| 4 | **developer-power-skills** | Kỹ năng lập trình cấp cao: debug, refactor, Clean Code, design patterns |
+| 5 | **elite-workflows-and-taste** | Quy trình phát triển tinh hoa, gu thẩm mỹ giao diện và tiêu chuẩn kỹ thuật |
+| 6 | **firebase** | Quản trị Firebase backend, Firestore, Authentication và Cloud Functions |
+| 7 | **google-antigravity-sdk** | SDK mở rộng chính thức cho Antigravity 2.0 API & agent integrations |
+| 8 | **modern-web-guidance-plugin** | Hướng dẫn phát triển web hiện đại (React 19, Next.js, Vite, TypeScript) |
+| 9 | **openspec-plugin** | Quản lý thay đổi phần mềm chuẩn OpenSpec (Propose, Apply, Verify, Archive) |
+| 10 | **science** | Tính toán khoa học, phân tích dữ liệu, ma trận và thuật toán học thuật |
+| 11 | **scientific-agent-skills** | Kỹ năng nghiên cứu khoa học chuyên sâu, phân tích cấu trúc, sinh học & y sinh |
+| 12 | **social-media-skills** | Tối ưu hóa nội dung, visual marketing, thumbnail và chiến lược truyền thông |
+
+---
+
+## 🗺️ Omni-Skills Registry & Inverted Intent Routing
+
+Không còn tình trạng nhồi nhét hàng trăm file mô tả skill vào system prompt gây tràn context. AgentKit v6.0 sử dụng mô hình **Dual-Registry**:
+
+```
+                       User Prompt (Tiếng Việt Tự Nhiên)
+                                      │
+                                      ▼
+               ┌──────────────────────────────────────────────┐
+               │  Inverted Intent Router (skills_index.json)  │
+               │         (< 20KB · 67 Intents · O(1))         │
+               └──────────────────────┬───────────────────────┘
+                                      │
+                     ┌────────────────┴────────────────┐
+                     ▼                                 ▼
+         [Plugins Hot-Loaded]              [Standalone Cold Storage]
+         12 Plugins (~/.gemini)            22 Skills (registry/storage/)
+```
+
+- **Inverted Index (`registry/skills_index.json`):** Ánh xạ hơn 290 cụm từ tiếng Việt tự nhiên và 67 danh mục ý định sang chính xác skill/plugin đích trong thời gian $O(1)$.
+- **Standalone Cold Storage (`registry/storage/`):** Chứa 22 kỹ năng chuyên biệt độc lập (WordPress, Cloudflare Agent, Health, Web Performance, Sandboxing...) chỉ tải khi được kích hoạt.
 
 ---
 
 ## ⚡ Bộ Tứ Hệ Sinh Thái Hợp Lực (The Synergistic Quad-Stack)
 
-AgentKit Dual-Control không hoạt động đơn độc mà kết nối chặt chẽ với **4 trụ cột công nghệ** nhằm tối đa hóa chất lượng code và tối ưu hóa tài nguyên:
+AgentKit Dual-Control kết nối chặt chẽ với **4 trụ cột công nghệ** nhằm tối đa hóa chất lượng code và tối ưu hóa tài nguyên:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                      AGENTKIT DUAL-CONTROL v5.5.0                      │
-│        (14 Runtime Protocols · 5 Automated Gates · CoW Engine)         │
+│                      AGENTKIT DUAL-CONTROL v6.0.0                      │
+│        (14 Runtime Protocols · 12 Plugins · Omni-Skills Router)        │
 └───────┬───────────────────┬───────────────────┬─────────────────┬──────┘
         │                   │                   │                 │
         ▼                   ▼                   ▼                 ▼
@@ -52,7 +103,7 @@ AgentKit Dual-Control không hoạt động đơn độc mà kết nối chặt 
 
 ### 1. ⚡ RTK (Rust Token Killer)
 - **Vai trò:** Tự động nén và lọc output của mọi lệnh terminal (`git`, `npm`, `pytest`, `cargo`, `dir`...).
-- **Hiệu quả:** Cắt giảm **50% – 99% token rác** từ stdout/stderr, ngăn chặn hoàn toàn tình trạng tràn ngữ cảnh (Context Overflow).
+- **Hiệu quả:** Cắt giảm **50% – 99% token rác** từ stdout/stderr, ngăn chặn hoàn toàn tình trạng tràn ngữ cảnh.
 
 ### 2. 🔍 CodeGraph (v1.6.2 Engine)
 - **Vai trò:** Đồ thị tri thức mã nguồn cục bộ (Local-First Semantic AST Graph) chạy bằng nhân Rust native cho 20+ ngôn ngữ.
@@ -89,9 +140,9 @@ flowchart TD
 
     subgraph Phase2["PHA 2: THỰC THI CHIA NHỎ (Tri-Worker)"]
         direction TB
-        AP --> W1["Worker 1: Core Logic"]
-        AP --> W2["Worker 2: Integration & API"]
-        AP --> W3["Worker 3: Tests & Hardening"]
+        AP --> W1["Worker 1: Core Logic & Dedup"]
+        AP --> W2["Worker 2: Integration & Packaging"]
+        AP --> W3["Worker 3: Tests & Verification Guard"]
         W1 & W2 & W3 --> CoW["CoW Snapshot Engine & Atomic Merge"]
     end
 
@@ -111,13 +162,14 @@ flowchart TD
 
 ---
 
-## 🛡️ Hệ Thống 5 Cổng Kiểm Soát (5-Gate Pipeline)
+## 🛡️ Hệ Thống Cổng Kiểm Soát (Quality Gates)
 
-Mọi dòng code viết ra bắt buộc phải vượt qua 5 cổng kiểm soát tự động trước khi bàn giao:
+Mọi dòng code viết ra bắt buộc phải vượt qua các cổng kiểm soát tự động trước khi bàn giao:
 
 | Cổng | Tên Cổng | Cơ Chế Kiểm Soát | Hành Động Khi Vi Phạm |
 | :---: | :--- | :--- | :--- |
 | **Gate 0** | **SDE Contract** | Quét phạm vi file sửa đổi, chặn 100% tình trạng Scope Creep | **Chặn ngay lập tức** |
+| **Gate 0.5** | **Cross-Worker Contract** | Kiểm tra tương thích arity, chữ ký hàm giữa các worker | Chặn merge không khớp |
 | **Gate 1** | **Deep AST Linter** | Phân tích AST bắt `bare except`, nuốt lỗi ngầm, rò rỉ tài nguyên | Bắt buộc sửa tận gốc |
 | **Gate 2** | **Test Rigor** | Kiểm tra mật độ Assert Density ($\ge 2.0$), Mutation Kill Rate ($\ge 80\%$) | Bổ sung test cases |
 | **Gate 2.5**| **Test Execution** | Chạy toàn bộ test suite thực tế của dự án | **FAIL-CLOSED:** Dừng pipeline |
@@ -127,20 +179,19 @@ Mọi dòng code viết ra bắt buộc phải vượt qua 5 cổng kiểm soát
 
 ## 🧹 Ephemeral Cleanup Guard & Quarantine Engine
 
-Không còn tình trạng AI tạo hàng tá script nháp (`inspect_*.py`, `probe_*.py`) gây ô nhiễm thư mục dự án:
-- **Zero-Pollution Rule:** Cấm tạo file tạm tại Workspace Root. Mọi kiểm thử phải dùng one-liner (`python -c`) hoặc thư mục nháp tự hủy.
+- **Zero-Pollution Rule:** Cấm tạo file tạm tại Workspace Root. Mọi kiểm thử phải dùng one-liner (`python -c`) hoặc thư mục scratch tự hủy.
 - **Quarantine Soft-Delete:** File rác không bị xóa vĩnh viễn ngay mà được đưa vào `.agentkit/trash/<tx_id>/` kèm nhật ký `wal.json`.
-- **Hoàn Tác 1 Giây (`undo-prune`):** Nếu lỡ tay dọn nhầm, chỉ cần gõ 1 lệnh để khôi phục nguyên trạng:
+- **Hoàn Tác 1 Giây (`undo-prune`):** Khôi phục nguyên trạng file bị dọn dẹp nhầm:
   ```powershell
   python scripts/cleanup_guard.py undo-prune --tx <transaction_id>
   ```
-- **Secure Shredding:** Ghi đè byte `0x00` trước khi xóa vĩnh viễn các file chứa token, key hoặc mật khẩu nhạy cảm.
+- **Secure Shredding:** Ghi đè byte `0x00` trước khi xóa vĩnh viễn các file nhạy cảm.
 
 ---
 
 ## 🚀 Hướng Dẫn Cài Đặt Siêu Tốc (Quick Install)
 
-### Cách 1: Cài đặt 1-chạm qua PowerShell (Khuyên dùng cho Windows)
+### Cách 1: Cài đặt 1-chạm qua PowerShell (Khuyên dùng cho Windows & Antigravity 2.0)
 
 Mở PowerShell và chạy lệnh sau:
 
@@ -149,11 +200,12 @@ irm https://raw.githubusercontent.com/vanlinh0392-art/agentkit-dual-control/main
 ```
 
 *Script sẽ tự động:*
-1. Clone repo vào `%USERPROFILE%\.gemini\config\skills\agentkit-dual-control`.
+1. Clone / cập nhật repo vào `%USERPROFILE%\.gemini\config\skills\agentkit-dual-control`.
 2. Kiểm tra Python 3.10+, Git, RTK, CodeGraph.
-3. **Đồng bộ tự động các Rule & Doctrine fix cứng:** Nạp trực tiếp toàn bộ các Doctrine cốt lõi từ `GEMINI.md` vào `~/.gemini/GEMINI.md` của bạn (kèm sao lưu tự động).
-4. Chạy `health_check.py` kiểm chứng toàn bộ 19 module.
-5. Sẵn sàng hoạt động ngay lập tức trên Antigravity / Gemini CLI.
+3. **Triển khai 12 Plugins:** Tự động đồng bộ 12 plugins vào `%USERPROFILE%\.gemini\config\plugins\`.
+4. **Đồng bộ Doctrines fix cứng:** Nạp trực tiếp toàn bộ các Doctrine cốt lõi từ `GEMINI.md` vào `~/.gemini/GEMINI.md` kèm bảng Router 64+ intents tiếng Việt.
+5. **Kiểm tra Omni-Skills Registry:** Xác thực `skills_index.json` và kho lưu trữ standalone.
+6. Chạy `health_check.py` kiểm chứng toàn bộ hệ thống.
 
 ---
 
@@ -165,29 +217,28 @@ curl -fsSL https://raw.githubusercontent.com/vanlinh0392-art/agentkit-dual-contr
 
 ---
 
-### Cách 3: Cài đặt thủ công (Manual Git Clone)
+### Cách 3: Cài đặt thủ công (Manual Setup)
 
 ```bash
-# 1. Di chuyển vào thư mục skills của Antigravity/Gemini
+# 1. Clone repository
 mkdir -p ~/.gemini/config/skills
-cd ~/.gemini/config/skills
+git clone https://github.com/vanlinh0392-art/agentkit-dual-control.git ~/.gemini/config/skills/agentkit-dual-control
 
-# 2. Clone repository
-git clone https://github.com/vanlinh0392-art/agentkit-dual-control.git
+# 2. Triển khai 12 Plugins
+mkdir -p ~/.gemini/config/plugins
+cp -r ~/.gemini/config/skills/agentkit-dual-control/plugins/* ~/.gemini/config/plugins/
 
-# 3. Đồng bộ file Rule fix cứng vào ~/.gemini/GEMINI.md
-cp agentkit-dual-control/GEMINI.md ~/.gemini/GEMINI.md
+# 3. Đồng bộ Rule fix cứng vào ~/.gemini/GEMINI.md
+cp ~/.gemini/config/skills/agentkit-dual-control/GEMINI.md ~/.gemini/GEMINI.md
 
-# 4. Kiểm tra tính toàn vẹn hệ thống
-cd agentkit-dual-control
+# 4. Kiểm tra toàn vẹn hệ thống
+cd ~/.gemini/config/skills/agentkit-dual-control
 python scripts/health_check.py
 ```
 
 ---
 
 ## 📜 Các Quy Tắc Fix Cứng Trong `GEMINI.md` (System Doctrines)
-
-Để đảm bảo AI luôn tuân thủ kỷ luật nghiêm ngặt mà không phụ thuộc vào ngữ cảnh hội thoại, AgentKit đóng gói sẵn toàn bộ các **Doctrines fix cứng** trong `GEMINI.md`:
 
 | Doctrine | Mục đích cốt lõi |
 | :--- | :--- |
@@ -197,38 +248,48 @@ python scripts/health_check.py
 | **🪓 Ponytail Doctrine** | Thang quyết định 7 bước (YAGNI), sửa lỗi tận gốc (cấm vá lớp vỏ), Zero-Pollution Workspace (cấm tạo probe script tại root). |
 | **⚡ RTK Doctrine** | Bắt buộc đặt tiền tố `rtk` trước mọi lệnh shell để nén 50% – 99% token. |
 | **🔍 CodeGraph Doctrine** | Tự động nhận diện `.codegraph/`, ép dùng `codegraph_explore` thay vì grep thủ công. |
+| **🎯 Natural Intent Router** | Tự động phân loại 64+ ý định tự nhiên bằng tiếng Việt sang đúng skill/plugin chuyên môn. |
 
 ---
 
 ## 🧪 Kiểm Thử Toàn Diện (Test Suite)
 
-AgentKit Dual-Control đi kèm bộ kiểm thử hồi quy khắt khe với **23 nhóm test suite**:
+AgentKit Dual-Control đi kèm bộ kiểm thử hồi quy khắt khe:
 
 ```powershell
 python scripts/test_agentkit.py
 ```
 
-**Kết quả kiểm chuẩn thực tế:**
-```text
-============================================================
-📊 Results: 250/250 passed, 0 failed, 0 warnings
-✅ ALL TESTS PASSED — ANTIGRAVITY v5.0.0 ADVERSARIAL ZERO-DEFECT DEFENSE HARDENED
-============================================================
-```
-
 ---
 
-## 📂 Cấu Trúc Thư Mục (Directory Layout)
+## 📂 Cấu Trúc Thư Mục (Directory Layout v6.0)
 
 ```text
 agentkit-dual-control/
-├── config.yaml               # Cấu hình trung tâm (Gates, Thresholds, Quarantine, Timeouts)
+├── config.yaml               # Cấu hình trung tâm (Gates, Thresholds, Plugins, Registry, Timeouts)
 ├── SKILL.md                  # Bản đồ giao thức điều hướng cho AI Coding Assistant
-├── GEMINI.md                 # Quy tắc fix cứng toàn cục (Doctrines: Dual-Control, Ponytail, RTK, CodeGraph)
-├── README.md                 # Tài liệu hướng dẫn sử dụng & kiến trúc
+├── GEMINI.md                 # Quy tắc fix cứng toàn cục & Intent Router 64+ tiếng Việt
+├── SOUL.md                   # Bản sắc kỹ sư Senior Staff & Triết lý kỹ thuật
+├── README.md                 # Tài liệu hướng dẫn sử dụng & kiến trúc v6.0
 ├── LICENSE                   # Giấy phép nguồn mở MIT
-├── install.ps1               # Script cài đặt 1-click cho Windows PowerShell
+├── install.ps1               # Script cài đặt 1-click cho Windows PowerShell (Antigravity 2.0)
 ├── install.sh                # Script cài đặt 1-click cho Linux / macOS
+├── plugins/                  # 12 Plugins chuyên biệt đóng gói cho Google Antigravity
+│   ├── android-cli-plugin/
+│   ├── antigravity-kit-plugin/
+│   ├── chrome-devtools-plugin/
+│   ├── developer-power-skills/
+│   ├── elite-workflows-and-taste/
+│   ├── firebase/
+│   ├── google-antigravity-sdk/
+│   ├── modern-web-guidance-plugin/
+│   ├── openspec-plugin/
+│   ├── science/
+│   ├── scientific-agent-skills/
+│   └── social-media-skills/
+├── registry/                 # Hệ thống định tuyến & lưu trữ kỹ năng Omni-Skills
+│   ├── skills_index.json     # Inverted Intent Router (<20KB, 67 intents, 290+ triggers)
+│   └── storage/              # Kho lưu trữ 22 Standalone skills chuyên biệt
 ├── references/               # Tài liệu chi tiết các phân tầng
 │   ├── protocols.md          # 14 Runtime Protocols chi tiết
 │   ├── sidecar_matrix.md     # Ma trận Sidecars & 7 Vector tấn công của Skeptic
@@ -249,7 +310,7 @@ agentkit-dual-control/
     ├── task_watchdog.py      # Watchdog chống treo lệnh nền
     ├── test_guard.py         # Kiểm tra Rigor & Mutation Testing Lite
     ├── worktree_gc.py        # Dọn dẹp Git Worktrees
-    ├── test_agentkit.py      # Bộ kiểm thử tích hợp 250 test cases
+    ├── test_agentkit.py      # Bộ kiểm thử tích hợp toàn diện
     └── _shared.py            # Thư viện dùng chung (DRY Module)
 ```
 

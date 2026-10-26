@@ -1020,13 +1020,14 @@ def main():
     test_adversarial_review_council_group21()
     test_sde_contract_and_scope_creep_group22()
     test_post_task_cleanup_guard_group23()
+    test_omni_skills_registry_group24()
 
     print("\n" + "=" * 60)
     total = passed + failed
     print(f"📊 Results: {passed}/{total} passed, {failed} failed, {warnings} warnings")
 
     if failed == 0:
-        print("✅ ALL TESTS PASSED — ANTIGRAVITY v5.0.0 ADVERSARIAL ZERO-DEFECT DEFENSE HARDENED")
+        print("✅ ALL TESTS PASSED — ANTIGRAVITY v6.0.0 OMNI-SKILLS & ZERO-DEFECT DEFENSE HARDENED")
     else:
         print(f"❌ {failed} TESTS FAILED")
 
@@ -1345,6 +1346,132 @@ def test_post_task_cleanup_guard_group23():
         # 8. Test Zero-Pollution Workspace compliance trong GEMINI.md
         gemini_text = read_file(GEMINI_MD)
         test("GEMINI.md chứa quy tắc ZERO-POLLUTION WORKSPACE (diệt rác tại nguồn)", "ZERO-POLLUTION WORKSPACE" in gemini_text)
+
+
+def test_omni_skills_registry_group24():
+    print("\n📦 Test Group 24: Omni-Skills Registry, 12 Plugins Manifest & Zero-Dead Verification (v6.0)")
+
+    # Test 1: skills_index.json tồn tại, parse JSON hợp lệ, chứa các intent triggers
+    skills_index_path = SKILL_DIR / "registry" / "skills_index.json"
+    test("skills_index.json tồn tại trong registry/", skills_index_path.exists())
+
+    if skills_index_path.exists():
+        try:
+            index_data = json.loads(skills_index_path.read_text(encoding="utf-8"))
+            test("skills_index.json parse JSON hợp lệ", isinstance(index_data, dict))
+
+            total_intents = index_data.get("total_intents", len(index_data.get("skills", {})))
+            total_triggers = index_data.get("total_triggers", len(index_data.get("index", {})))
+
+            test("skills_index.json chứa 64+ intent triggers hợp lệ", total_intents >= 64 and total_triggers >= 64,
+                 f"intents={total_intents}, triggers={total_triggers}")
+
+            test("skills_index.json có cấu trúc bảng băm tra cứu nhanh (<50KB)",
+                 skills_index_path.stat().st_size < 51200 and ("index" in index_data or "inverted_index" in index_data))
+        except Exception as e:
+            test("skills_index.json parse JSON hợp lệ", False, str(e))
+    else:
+        test("skills_index.json parse JSON hợp lệ", False, "File không tồn tại")
+
+    # Test 2: 12 plugins trong plugins/ đều có plugin.json hợp lệ
+    plugins_dir = SKILL_DIR / "plugins"
+    test("plugins/ directory tồn tại", plugins_dir.is_dir())
+
+    if plugins_dir.is_dir():
+        plugin_dirs = [p for p in plugins_dir.iterdir() if p.is_dir()]
+        test(f"Đủ 12 plugins trong plugins/ (tìm thấy {len(plugin_dirs)})", len(plugin_dirs) == 12)
+
+        all_valid_manifests = True
+        manifest_issues = []
+        for p in plugin_dirs:
+            p_json = p / "plugin.json"
+            if not p_json.exists():
+                all_valid_manifests = False
+                manifest_issues.append(f"{p.name} thiếu plugin.json")
+                continue
+            try:
+                p_data = json.loads(p_json.read_text(encoding="utf-8-sig"))
+                if not p_data.get("name"):
+                    all_valid_manifests = False
+                    manifest_issues.append(f"{p.name}/plugin.json thiếu name")
+            except Exception as e:
+                all_valid_manifests = False
+                manifest_issues.append(f"{p.name}/plugin.json lỗi JSON: {e}")
+
+        test("Tất cả 12 plugins đều có plugin.json hợp lệ", all_valid_manifests, "; ".join(manifest_issues))
+    else:
+        test("Tất cả 12 plugins đều có plugin.json hợp lệ", False, "plugins/ không tồn tại")
+
+    # Test 3: Zero Dead Files (xác nhận không còn thư mục rules/ thừa, không có install-to-claude.ps1)
+    has_rules_skill = (SKILL_DIR / "rules").exists()
+    ee_candidates = list((Path.home() / ".gemini" / "antigravity" / "brain").glob("*/scratch/everything-everywhere"))
+    has_rules_ee = any((p / "rules").exists() for p in ee_candidates)
+
+    test("Zero Dead Folders: Không còn thư mục rules/ thừa thãi",
+         not has_rules_skill and not has_rules_ee,
+         f"rules tồn tại ở skill={has_rules_skill}, ee={has_rules_ee}")
+
+    has_claude_script = (
+        (SKILL_DIR / "install-to-claude.ps1").exists() or
+        (SKILL_DIR / "scripts" / "install-to-claude.ps1").exists() or
+        any((p / "scripts" / "install-to-claude.ps1").exists() for p in ee_candidates)
+    )
+    test("Zero Dead Files: Không còn install-to-claude.ps1 thừa thãi", not has_claude_script)
+
+    # Test 4: Zero Duplicate Skills (không có skill nào ở root registry/storage bị trùng tên với plugin skill)
+    storage_dir = SKILL_DIR / "registry" / "storage"
+    plugin_skills = set()
+    if plugins_dir.is_dir():
+        for p in plugins_dir.iterdir():
+            if p.is_dir():
+                s_dir = p / "skills"
+                if s_dir.is_dir():
+                    for s in s_dir.iterdir():
+                        if s.is_dir():
+                            plugin_skills.add(s.name)
+
+    storage_skills = set()
+    if storage_dir.is_dir():
+        for s in storage_dir.iterdir():
+            if s.is_dir():
+                storage_skills.add(s.name)
+
+    duplicate_skills = plugin_skills.intersection(storage_skills)
+    test(f"Zero Duplicate Skills: Khử 100% trùng lặp giữa registry/storage ({len(storage_skills)}) và plugins ({len(plugin_skills)})",
+         len(duplicate_skills) == 0,
+         f"Trùng lặp: {duplicate_skills}")
+
+    # Test 5: SOUL.md và GEMINI.md chứa đủ intent mappings và SOUL principles
+    soul_file = SKILL_DIR / "SOUL.md"
+    test("SOUL.md tồn tại trong agentkit-dual-control", soul_file.exists())
+
+    if soul_file.exists():
+        soul_text = read_file(soul_file)
+        has_soul_core = (
+            ("anti-ai slop" in soul_text.lower() or "slop" in soul_text.lower()) and
+            ("bản sắc" in soul_text.lower() or "triết lý" in soul_text.lower() or "senior" in soul_text.lower()) and
+            ("context discipline" in soul_text.lower() or "ngữ cảnh" in soul_text.lower())
+        )
+        test("SOUL.md chứa đầy đủ các nguyên tắc cốt lõi (Anti-AI Slop, Context Discipline, Pragmatic)",
+             has_soul_core)
+    else:
+        test("SOUL.md chứa đầy đủ các nguyên tắc cốt lõi", False, "SOUL.md không tồn tại")
+
+    gemini_file = SKILL_DIR / "GEMINI.md" if (SKILL_DIR / "GEMINI.md").exists() else GEMINI_MD
+    gemini_text = read_file(gemini_file)
+
+    has_intent_map = (
+        ("skills_index" in gemini_text or "intent" in gemini_text.lower() or "bảng ánh xạ" in gemini_text.lower()) and
+        ("clean-code" in gemini_text or "ui-ux" in gemini_text or "plugin" in gemini_text.lower())
+    )
+    test("GEMINI.md tích hợp bảng ánh xạ Intent Fast-Router & Omni-Skills", has_intent_map)
+
+    has_soul_in_gemini = (
+        "soul" in gemini_text.lower() or
+        "anti-ai slop" in gemini_text.lower() or
+        "triết lý" in gemini_text.lower()
+    )
+    test("GEMINI.md tích hợp triết lý SOUL & Dual-Control Doctrine", has_soul_in_gemini)
 
 
 if __name__ == "__main__":

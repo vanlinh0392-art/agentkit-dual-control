@@ -113,6 +113,45 @@ def check_references() -> list[tuple[str, bool, str]]:
     return results
 
 
+def check_registry() -> tuple[bool, str]:
+    """Check registry/skills_index.json exists and is valid."""
+    reg_path = SCRIPTS_DIR.parent / "registry" / "skills_index.json"
+    if not reg_path.exists():
+        return False, "skills_index.json not found"
+    try:
+        data = json.loads(reg_path.read_text(encoding="utf-8"))
+        intents = data.get("total_intents", len(data.get("skills", {})))
+        triggers = data.get("total_triggers", len(data.get("index", {})))
+        if intents > 0 and triggers > 0:
+            return True, f"{intents} intents, {triggers} triggers ({reg_path.stat().st_size} bytes)"
+        return False, f"invalid counts: {intents} intents, {triggers} triggers"
+    except Exception as e:
+        return False, f"JSON parse error: {e}"
+
+
+def check_plugins() -> tuple[bool, str]:
+    """Check 12 plugins in plugins/ directory each have a valid plugin.json."""
+    plugins_dir = SCRIPTS_DIR.parent / "plugins"
+    if not plugins_dir.exists():
+        return False, "plugins/ directory not found"
+    subdirs = [p for p in plugins_dir.iterdir() if p.is_dir()]
+    if len(subdirs) < 12:
+        return False, f"expected 12 plugins, found {len(subdirs)}"
+    valid_count = 0
+    for p in subdirs:
+        pj = p / "plugin.json"
+        if not pj.exists():
+            return False, f"missing plugin.json in {p.name}"
+        try:
+            pdata = json.loads(pj.read_text(encoding="utf-8-sig"))
+            if not pdata.get("name"):
+                return False, f"plugin.json in {p.name} missing 'name' field"
+            valid_count += 1
+        except Exception as e:
+            return False, f"invalid plugin.json in {p.name}: {e}"
+    return True, f"{valid_count}/12 plugins valid"
+
+
 def main():
     json_mode = "--json" in sys.argv
     results = []
@@ -123,6 +162,21 @@ def main():
     ok, detail = check_config()
     results.append(("config.yaml", ok, detail))
     if ok:
+        passed += 1
+    else:
+        failed += 1
+
+    # Check registry & plugins
+    ok_reg, detail_reg = check_registry()
+    results.append(("registry/skills_index.json", ok_reg, detail_reg))
+    if ok_reg:
+        passed += 1
+    else:
+        failed += 1
+
+    ok_plg, detail_plg = check_plugins()
+    results.append(("plugins (12 manifests)", ok_plg, detail_plg))
+    if ok_plg:
         passed += 1
     else:
         failed += 1

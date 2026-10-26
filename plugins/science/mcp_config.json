@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "biomolecular_structure_viewer_mcp": {
+      "command": "agy-node",
+      "args": ["sidecars/biomolecular_structure_viewer/dist/mcp_entry.cjs"]
+    }
+  }
+}

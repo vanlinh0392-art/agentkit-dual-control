@@ -1,0 +1,27 @@
+{
+  "name": "modern-web-guidance-plugin",
+  "displayName": "Modern Web Guidance",
+  "description": "Keep your coding agent up to date with the latest web best practices.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Audit this project for modern web best practices and modernization opportunities",
+    "What is the recommended modern way to implement responsive dialogs and popovers?",
+    "Build a Chrome Extension with a side panel using Manifest V3 best practices"
+  ],
+  "author": {
+    "name": "Google Chrome",
+    "url": "https://developer.chrome.com"
+  },
+  "homepage": "https://developer.chrome.com/docs/modern-web-guidance",
+  "repository": "https://github.com/GoogleChrome/modern-web-guidance",
+  "license": "Apache-2.0",
+  "keywords": [
+    "web",
+    "html",
+    "css",
+    "javascript",
+    "chrome-extensions",
+    "best-practices"
+  ],
+  "version": "0.0.194"
+}
